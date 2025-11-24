@@ -1,0 +1,27 @@
+import { Router } from "express";
+import { refreshAccessToken, registerUser } from "../controllers/user.controller.js";
+import { upload } from "../middlewares/multer.middleware.js"
+// import { verify } from "crypto";
+
+const router = Router()
+
+router.route("/register").post(
+    upload.fields([          // middleware insert
+        {
+            name: "avatar",
+            maxCount: 1
+        },
+        {
+            name: "coverImage",
+            maxCount: 1
+        }
+    ]),
+    registerUser
+);
+router.route("/login").post(login);
+
+//secured routes
+// router.route("/logout").post(verifyJWT, logoutUser)
+// router.route("/refresh-token").post(refreshAccessToken)
+
+export default router
